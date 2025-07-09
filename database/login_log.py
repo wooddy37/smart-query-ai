@@ -1,5 +1,5 @@
 import sqlite3
-from database.connection import get_connection
+from database.setup_database import get_connection
 
 def create_login_log(user_id, ip_address=None):
     """

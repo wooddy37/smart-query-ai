@@ -163,7 +163,7 @@ class AdminDashboard:
                 st.session_state["user_tab_selected_mode"] = "create"
                 self._save_and_rerun()
         
-        users = list_users()
+        users = list_users(True)
         
         if not users:
             st.info("등록된 사용자가 없습니다.")

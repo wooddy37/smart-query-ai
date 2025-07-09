@@ -22,7 +22,7 @@ from ai.search_client import get_embedding, index_query_to_search, search_docume
 from ai.openai_client import get_tuning_suggestion
 
 class UserDashboard:
-    """사용자 대시보드 클래스"""
+    """사용자 메뉴 클래스"""
 
     def __init__(self):
         self.current_user = get_current_user()
@@ -52,12 +52,11 @@ class UserDashboard:
 
     def _show_query_log_analysis(self):
         
-        st.subheader("쿼리 로그 분석")
+        # st.subheader("쿼리 로그 분석")
+        # st.markdown(f"**아이디:** `{self.current_user['user_id']}`")
+        # st.markdown(f"**권한:** {'관리자' if self.current_user['is_admin'] else '일반 사용자'}")
+        # st.divider()
 
-        st.markdown(f"**아이디:** `{self.current_user['user_id']}`")
-        st.markdown(f"**권한:** {'관리자' if self.current_user['is_admin'] else '일반 사용자'}")
-
-        st.divider()
         st.subheader("📁 내 프로젝트 목록")
         projects = list_user_projects(self.current_user['user_id'])
         if not projects:
@@ -122,6 +121,13 @@ class UserDashboard:
                     st.session_state["prev_file_name"] = uploaded_file.name   
                     st.session_state["slow_query_page"] = 0 
                     st.session_state["error_query_page"] = 0
+
+                    keys_to_delete = [
+                        key for key in st.session_state.keys() 
+                        if "clicked_btn_ai_" in key or "result_suggestion_btn_ai_" in key or "result_similar_btn_ai_" in key
+                    ]
+                    for key in keys_to_delete:
+                        del st.session_state[key]
 
                     with st.spinner("파일 업로드 중..."):
 
@@ -347,9 +353,9 @@ class UserDashboard:
         df = pd.DataFrame(query_logs)
         df.index = df.index + 1
         df["created_dt"] = utc_to_local(df["created_at"])
-        df["sql_html"] = df["sql"].str.replace('\n', '<br>', regex=False).apply(html.escape)
-        df = df[["project_code", "dbms_type", "query_type", "sql_html", "suggestion", "created_at"]]
-        df.columns = ["프로젝트", "DBMS", "쿼리 유형",  "쿼리", "제안", "등록일"]
+        df["sql_html"] = df["sql"].str.replace('\n', '<br>', regex=False).apply(html.unescape)
+        df = df[["project_code", "project_name", "dbms_type", "query_type", "sql_html", "suggestion", "created_at"]]
+        df.columns = ["프로젝트 코드", "프로제트명", "DBMS", "쿼리 유형",  "쿼리", "제안", "등록일"]
         # df.insert(0, "No", range(1, len(df) + 1))
 
         df_range = df.copy()

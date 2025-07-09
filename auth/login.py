@@ -1,6 +1,6 @@
 # 로그인 함수
 import sqlite3
-from database.connection import get_connection
+from database.setup_database import get_connection
 from auth.password import check_password
 from database.login_log import create_login_log
 

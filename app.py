@@ -3,10 +3,11 @@ import streamlit as st
 import os
 from streamlit_option_menu import option_menu
 from auth.session import get_current_user, load_session_state, load_user_from_token
-from database.connection import init_db
+from database.setup_database import init_db
 from router import login_page
 from router.admin_dashboard import AdminDashboard
 from router.user_dashboard import UserDashboard
+from router.user_embedding import UserEmbedding
 
 # if 'selected_menu_index' not in st.session_state:
 #     st.session_state["selected_menu_index"] = 0
@@ -29,6 +30,7 @@ def logout():
 def route():
 
     dashboard = None
+    embedding = None
 
     if not st.session_state.get("logged_in", False):
 
@@ -58,7 +60,7 @@ def route():
 
             dashboard = AdminDashboard()
             st.set_page_config(
-                page_title="관리자 대시보드",
+                page_title="관리자 메뉴",
                 layout="wide",       # 화면 넓게 사용
                 initial_sidebar_state="auto"
             )
@@ -91,9 +93,10 @@ def route():
         else:
 
             dashboard = UserDashboard()
+            embedding = UserEmbedding()
 
             st.set_page_config(
-                page_title="사용자 대시보드",
+                page_title="사용자 메뉴",
                 layout="wide",       # 화면 넓게 사용
                 initial_sidebar_state="auto"
             )
@@ -102,15 +105,16 @@ def route():
                 st.markdown(f"**{current_user["user_id"]}님**")
                 selected = option_menu(
                     menu_title="사용자 메뉴",
-                    options=["쿼리 로그 분석", "이력 관리"],
-                    icons=["bi-graph-up", "bi-clipboard-data"],
+                    options=["쿼리 로그 분석", "이력 관리", "유사 쿼리 검색"],
+                    icons=["bi-graph-up", "clipboard2-data", "search"],
                     menu_icon="cast",
                     default_index=0,
                     orientation="vertical",
                 )
+                
                 # 로그아웃
                 st.markdown("---")
-                if st.button("🔓 로그아웃", use_container_width=True):
+                if st.button("🔚 로그아웃", use_container_width=True):
                     logout()
 
             page = selected
@@ -119,6 +123,9 @@ def route():
                 dashboard._show_query_log_analysis()
             elif page == "이력 관리":
                 dashboard._show_query_log_analysis_history()
+            elif page == "유사 쿼리 검색":
+                embedding.show_query_similarity_search()
+                
 
 
 

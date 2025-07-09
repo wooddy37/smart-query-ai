@@ -1,6 +1,6 @@
 import sqlite3
 from typing import Dict, Optional
-from database.connection import get_connection
+from database.setup_database import get_connection
 from auth.password import hash_password
 
 def get_user(user_id: int) -> Optional[Dict]:
@@ -18,10 +18,13 @@ def get_user(user_id: int) -> Optional[Dict]:
         }
     return None
 
-def list_users():
+def list_users(has_admin=False):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT user_id, is_admin, created_by, created_at FROM users ORDER BY created_at DESC")
+    if has_admin:
+        cur.execute("SELECT user_id, is_admin, created_by, created_at FROM users ORDER BY created_at DESC")
+    else:
+        cur.execute("SELECT user_id, is_admin, created_by, created_at FROM users WHERE is_admin = 0 ORDER BY created_at DESC")
     rows = cur.fetchall()
     conn.close()
     return [{"user_id": r[0], "is_admin": bool(r[1]), "created_by": r[2], "created_at": r[3]} for r in rows]

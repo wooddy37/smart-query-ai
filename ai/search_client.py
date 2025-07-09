@@ -134,36 +134,6 @@ def search_documents(dbms_type: str, query_text: str, filters=None, top_k=10):
     except Exception as e:
         raise RuntimeError(f"검색 실패: {e}")
 
-# # 인덱스 생성여부 체크
-# def get_or_create_search_index(index_name: str):
-#     # credential = AzureKeyCredential(AZURE_SEARCH_KEY)
-#     # index_client = SearchIndexClient(endpoint=AZURE_SEARCH_ENDPOINT, credential=credential)
-
-#     try:
-#         search_index_client.get_index(index_name)
-#     except Exception as e:
-#         print(f"🔧 인덱스 '{index_name}' 가 없어 새로 생성합니다.")
-#         fields = [
-#             SimpleField(name="id", type=SearchFieldDataType.String, key=True),
-#             SimpleField(name="user_id", type=SearchFieldDataType.String, filterable=True),
-#             SearchableField(name="sql_query", type=SearchFieldDataType.String, searchable=True),
-#             SearchableField(name="suggestion", type=SearchFieldDataType.String, searchable=True),
-#             SimpleField(name="query_type", type=SearchFieldDataType.String, filterable=True, facetable=True),
-#             SimpleField(name="duration_ms", type=SearchFieldDataType.Double, filterable=True, sortable=True),
-#             SimpleField(name="language", type=SearchFieldDataType.String, filterable=True, facetable=True),
-#             SimpleField(name="dbms_type", type=SearchFieldDataType.String, filterable=True, facetable=True),
-#             SimpleField(name="project_code", type=SearchFieldDataType.String, filterable=True, facetable=True),
-#             SimpleField(name="created_at", type=SearchFieldDataType.DateTimeOffset, filterable=True, sortable=True),
-#             SearchField(
-#             name="sql_embedding",
-#             type=SearchFieldDataType.Collection(SearchFieldDataType.Single),
-#             searchable=True,
-#             vector_search_dimensions=1536,
-#             vector_search_profile_name="sql-profile"
-#             ),
-#         ]
-#         index = SearchIndex(name=index_name, fields=fields)
-#         search_index_client.create_index(index)
 
 # 의미 기반 검색 (벡터 임베딩을 이용한 semantic search)
 def semantic_search_queries(dbms_type: str, query_text: str, filters=None, top_k=10):
@@ -184,7 +154,7 @@ def semantic_search_queries(dbms_type: str, query_text: str, filters=None, top_k
         
          # 검색 실행 (벡터 검색 + 키워드 검색 병행 가능)
         search_results = client.search(
-            search_text=query_text,
+            # search_text=query_text,
             vector_queries=[vector_query],
             filter=filters,
             top=top_k,
