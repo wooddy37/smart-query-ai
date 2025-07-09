@@ -66,7 +66,7 @@ SMART-QUERY-AI/```
 │   └── session.py             # 세션 관리
 ├── database/                  # 데이터베이스 모듈
 │   ├── __init__.py
-│   ├── connection.py          # DB 연결
+│   ├── setup_database.py      # DB 초기 설정
 │   ├── login_log.py           # 로그인 로그
 │   ├── project.py             # 프로젝트 관리
 │   ├── query_log.py           # 쿼리 로그
