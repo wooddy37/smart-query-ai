@@ -1,0 +1,9 @@
+streamlit
+streamlit-aggrid
+streamlit-option-menu
+bcrypt
+pandas
+python-dotenv
+azure-storage-blob
+azure-search-documents
+openai
