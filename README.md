@@ -10,7 +10,7 @@
 - 슬로우 쿼리 분석: 사용자 정의 임계값 기반 성능 쿼리 탐지
 - 에러 쿼리 분석: 실행 오류 쿼리 자동 감지
 - AI 튜닝 제안: OpenAI GPT 모델을 활용한 최적화 제안
-- 유사 쿼리 검색: Azure AI Search 기반 자연어(키워드) 검색
+- 유사 쿼리 검색: Azure AI Search 기반 벡터 검색
 - 사용자 관리: 관리자/일반 사용자 관리 
 - 프로젝트 관리: 다중 프로젝트 환경 지원
 - 다국어 지원: 한국어, 영어, 베트남어 튜닝 제안
@@ -80,9 +80,10 @@ SMART-QUERY-AI/```
 │   └── postgresql.py          # PostgreSQL 로그 파서
 ├── router/                    # 라우팅 모듈
 │   ├── __init__.py
-│   ├── admin_dashboard.py     # 관리자 대시보드
+│   ├── admin_dashboard.py     # 관리자 메뉴
 │   ├── login_page.py          # 로그인 페이지
-│   └── user_dashboard.py      # 사용자 대시보드
+│   ├── user_dashboard.py      # 사용자 메뉴
+│   └── user_embedding.py   # 사용자 임베딩
 ├── session_states/            # 세션 상태 저장
 ├── session_tokens/            # 세션 토큰 저장
 └── utils/                     # 유틸리티 모듈
