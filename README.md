@@ -83,7 +83,7 @@ SMART-QUERY-AI/```
 │   ├── admin_dashboard.py     # 관리자 메뉴
 │   ├── login_page.py          # 로그인 페이지
 │   ├── user_dashboard.py      # 사용자 메뉴
-│   └── user_embedding.py   # 사용자 임베딩
+│   └── user_embedding.py      # 사용자 임베딩
 ├── session_states/            # 세션 상태 저장
 ├── session_tokens/            # 세션 토큰 저장
 └── utils/                     # 유틸리티 모듈
