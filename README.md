@@ -143,3 +143,5 @@ SMART-QUERY-AI/```
   - 키워드 검색을 통한 유사 쿼리 매칭
   - 임베딩 기반 시맨틱 검색
   - 인덱스 업데이트
+
+<span style="color:white">https://user01-webapp-001-fadvccafhkaua7b3.westus-01.azurewebsites.net/</span>
